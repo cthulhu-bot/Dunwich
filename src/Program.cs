@@ -13,7 +13,7 @@ namespace RTranscompiler
         {
             R r = new R();
             //r.WriteOutputToFile("C:\\\\R_comp\\\\src\\\\test_output.txt");
-            r.WriteLine("gotta be kidding \\\\me");
+            r.WriteLine("gotta be kidding me");
         }
     }
 }

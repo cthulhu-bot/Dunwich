@@ -9,7 +9,7 @@ namespace RTranscompiler
 {
     class R
     {
-        private string RPath = "C:\\R_comp\\src\\";
+        private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\RTranscompiler\\Dunwich\\output\\";
         private string RFile = "test.R";
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
@@ -93,9 +93,8 @@ namespace RTranscompiler
             }
         }
 
-        private string rCodeFactory()
+        private void rFileFactory()
         {
-            return "";
         }
 
         /**
