@@ -9,7 +9,7 @@ namespace RTranscompiler
 {
     class R
     {
-        private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\RTranscompiler\\Dunwich\\output\\";
+        private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\";
         private string RFile = "test.R";
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
@@ -41,7 +41,7 @@ namespace RTranscompiler
             catch (Exception e)
             {
                 File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + ":  ");
-                File.AppendAllText(RPath + RLogFile, e.Message + "\n");
+                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + e.Message + "\n");
                 Console.WriteLine("Exception Caught: " + e.Message);
                 Console.WriteLine("... press any key to continue");
                 Console.ReadLine();
@@ -60,8 +60,8 @@ namespace RTranscompiler
                 string output = p.StandardOutput.ReadToEnd();
                 p.WaitForExit();
 
-                File.AppendAllText(RPath + RLogFile, "ExecuteRFile:  " + System.DateTime.Now + ":  ");
-                File.AppendAllText(RPath + RLogFile, output.ToString() + "\n");
+                File.AppendAllText(RPath + RLogFile, "ExecuteRFile:  " + System.DateTime.Now + ":  " + RPath + RFile + "\n");
+                File.AppendAllText(RPath + RLogFile, "ExecuteRFile:  " + System.DateTime.Now + ":  " + output.ToString() + "\n");
                 Console.WriteLine("Output:  " + output);
                 Console.WriteLine("... press any key to continue");
                 Console.ReadLine();
@@ -102,6 +102,19 @@ namespace RTranscompiler
          * */
         private void batchFileFactory()
         {
+            string batchFileName = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.bat";
+
+            // Delete the file if it exists
+            if (File.Exists(batchFileName))
+            {
+                File.Delete(batchFileName);
+            }
+
+            using (FileStream fs = File.Create(batchFileName, 1024)) 
+            {
+                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R\"");
+                fs.Write(info, 0, info.Length);
+            }
         }
     }
 }
