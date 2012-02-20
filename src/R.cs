@@ -5,7 +5,7 @@ using System.Text;
 using System.IO;
 using System.Diagnostics;
 
-namespace RTranscompiler
+namespace Dunwich
 {
     class R
     {
@@ -18,18 +18,26 @@ namespace RTranscompiler
         public R()
         {
             this.RFileInit();
+            this.batchFileInit();
         }
 
         public void WriteLine(string command)
         {
             this.WriteToRFile("cat('" + command + "')\n");
-            this.ExecuteRFile(this.RPath + this.BatchFile);
         }
 
-        public void WriteOutputToFile(string file)
+        // For now the file that wants to get written must be fully qualified
+        // Later implementations should use Path objects to write to the appropriate directory
+        public void WriteToFileOn(string file)
         {
             this.WriteToRFile("sink(\"" + file + "\")\n");
         }
+
+        public void WriteToFileOff()
+        {
+            this.WriteToRFile("sink()\n");
+        }
+
 
         private void WriteToRFile(string command)
         {
@@ -48,14 +56,14 @@ namespace RTranscompiler
             }
         }
 
-        private void ExecuteRFile(string batchFile)
+        public void ExecuteRFile()
         {
             try
             {
                 Process p = new Process();
                 p.StartInfo.UseShellExecute = false;
                 p.StartInfo.RedirectStandardOutput = true;
-                p.StartInfo.FileName = batchFile;
+                p.StartInfo.FileName = this.RPath + this.BatchFile;
                 p.Start();
                 string output = p.StandardOutput.ReadToEnd();
                 p.WaitForExit();
@@ -78,29 +86,25 @@ namespace RTranscompiler
 
         private void RFileInit()
         {
-            try
-            {
-                //File.Delete(this.RPath + this.RFile);
-                //File.Create(this.RPath + this.RFile);
-            }
-            catch (Exception e)
-            {
-                File.AppendAllText(RPath + RLogFile, "RFileInit:  " + System.DateTime.Now + ":  ");
-                File.AppendAllText(RPath + RLogFile, e.Message + "\n");
-                Console.WriteLine("Exception Caught: " + e.Message);
-                Console.WriteLine("... press any key to continue");
-                Console.ReadLine();
-            }
-        }
+            string rFileName = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R";
 
-        private void rFileFactory()
-        {
+            // Create the file if it does not exist
+            // Else wipe its contents
+            if (!File.Exists(rFileName))
+            {
+                File.Create("C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R");
+            }
+            else
+            {
+                File.WriteAllText("C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R", "");
+            }
+
         }
 
         /**
          * Create batch files used to execute any generated .R files
          * */
-        private void batchFileFactory()
+        private void batchFileInit()
         {
             string batchFileName = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.bat";
 

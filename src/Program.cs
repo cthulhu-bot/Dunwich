@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 
-namespace RTranscompiler
+namespace Dunwich
 {
     class Program
     {
@@ -12,8 +12,11 @@ namespace RTranscompiler
         static void Main(string[] args)
         {
             R r = new R();
-            //r.WriteOutputToFile("test_output.txt");
-            r.WriteLine("gotta be kidding me");
+            r.WriteToFileOn("C:\\\\Users\\\\Joshua\\\\Documents\\\\Visual Studio 2010\\\\Projects\\\\Dunwich\\\\Dunwich\\\\output\\\\test_output.txt");
+            r.WriteLine("this shit should be working");
+            r.WriteToFileOff();
+            r.WriteLine("WTF");
+            r.ExecuteRFile();
         }
     }
 }
