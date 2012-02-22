@@ -86,17 +86,15 @@ namespace Dunwich
 
         private void RFileInit()
         {
-            string rFileName = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R";
-
             // Create the file if it does not exist
             // Else wipe its contents
-            if (!File.Exists(rFileName))
+            if (!File.Exists(this.RPath + this.RFile))
             {
-                File.Create("C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R");
+                File.Create(this.RPath + this.RFile);
             }
             else
             {
-                File.WriteAllText("C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R", "");
+                File.WriteAllText(this.RPath + this.RFile, "");
             }
 
         }
@@ -106,7 +104,7 @@ namespace Dunwich
          * */
         private void batchFileInit()
         {
-            string batchFileName = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.bat";
+            string batchFileName = this.RPath + this.BatchFile;
 
             // Delete the file if it exists
             if (File.Exists(batchFileName))
@@ -116,7 +114,7 @@ namespace Dunwich
 
             using (FileStream fs = File.Create(batchFileName, 1024)) 
             {
-                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\test.R\"");
+                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"" + this.RPath + this.RFile + "\"");
                 fs.Write(info, 0, info.Length);
             }
         }
