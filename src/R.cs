@@ -119,4 +119,13 @@ namespace Dunwich
             }
         }
     }
+
+    class RVectorAssembler
+    {
+        public RVector newRVector(RVectorFactory factory)
+        {
+            RVector rVector = (RVector)factory.GetRVector();
+            return rVector;
+        }
+    }
 }
