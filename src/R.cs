@@ -26,36 +26,72 @@ namespace Dunwich
             this.batchFileInit();
         }
 
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         public void plot(RVector r)
         {
             this.WriteToRFile("X11()\n");
             this.WriteToRFile("plot(" + r.name + ")");
         }
 
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         public void plot(RVector r1, RVector r2)
         {
             this.WriteToRFile("X11()\n");
             this.WriteToRFile("plot(" + r1.name + ", " + r2.name + ")");
         }
 
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         public void WriteLine(string command)
         {
             this.WriteToRFile("cat('" + command + "')\n");
         }
 
-        // For now the file that wants to get written must be fully qualified
-        // Later implementations should use Path objects to write to the appropriate directory
-        public void WriteToFileOn(string file)
+
+        /**
+         * Function:     StreamResultsToFile
+         * Description:  For now the file that wants to get written must be fully qualified.  
+         * Later implementations should use Path objects to write to the appropriate directory
+         * Parameters:
+         * Returns:
+         * */
+        public void StreamResultsToFileOn(string file)
         {
             this.WriteToRFile("sink(\"" + file + "\")\n");
         }
 
-        public void WriteToFileOff()
+        /**
+         * Function:     StreamResultsToFile
+         * Description:  For now the file that wants to get written must be fully qualified.  
+         * Later implementations should use Path objects to write to the appropriate directory
+         * Parameters:
+         * Returns:
+         * */
+        public void StreamResultsToFileOff()
         {
             this.WriteToRFile("sink()\n");
         }
 
-
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         private void WriteToRFile(string command)
         {
             string RFile = this.RPath + this.RFile;
@@ -73,6 +109,12 @@ namespace Dunwich
             }
         }
 
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         public void ExecuteRFile()
         {
             try
@@ -101,6 +143,12 @@ namespace Dunwich
             }
         }
 
+        /**
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
+         * */
         private void RFileInit()
         {
             // Create the file if it does not exist
@@ -117,7 +165,10 @@ namespace Dunwich
         }
 
         /**
-         * Create batch files used to execute any generated .R files
+         * Function:     batchFileInit
+         * Description:  Create batch files used to execute any generated .R files
+         * Parameters:
+         * Returns:
          * */
         private void batchFileInit()
         {

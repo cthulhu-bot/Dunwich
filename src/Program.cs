@@ -15,7 +15,7 @@ namespace Dunwich
             R r = new R();
             //r.WriteToFileOn("C:\\\\Users\\\\Joshua\\\\Documents\\\\Visual Studio 2010\\\\Projects\\\\Dunwich\\\\Dunwich\\\\output\\\\test_output.txt");
             //r.WriteLine("this shit should be working");
-            //r.WriteToFileOff();
+            //r.StreamResultsToFile();
             //r.WriteLine("WTF");
             //r.ExecuteRFile();
 
