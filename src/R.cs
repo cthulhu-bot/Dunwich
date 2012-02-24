@@ -4,9 +4,14 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using Dunwich.src;
 
 namespace Dunwich
 {
+    /**
+     * Class:  R
+     * Description: 
+     * */
     class R
     {
         private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\";
@@ -19,6 +24,18 @@ namespace Dunwich
         {
             this.RFileInit();
             this.batchFileInit();
+        }
+
+        public void plot(RVector r)
+        {
+            this.WriteToRFile("X11()\n");
+            this.WriteToRFile("plot(" + r.name + ")");
+        }
+
+        public void plot(RVector r1, RVector r2)
+        {
+            this.WriteToRFile("X11()\n");
+            this.WriteToRFile("plot(" + r1.name + ", " + r2.name + ")");
         }
 
         public void WriteLine(string command)
@@ -120,12 +137,12 @@ namespace Dunwich
         }
     }
 
-    class RVectorAssembler
-    {
-        public RVector newRVector(RVectorFactory factory)
-        {
-            RVector rVector = (RVector)factory.GetRVector();
-            return rVector;
-        }
-    }
+    //class RVectorAssembler
+    //{
+    //    public RVector newRVector(RVectorFactory factory)
+    //    {
+    //        RVector rVector = (RVector)factory.GetRVector();
+    //        return rVector;
+    //    }
+    //}
 }
