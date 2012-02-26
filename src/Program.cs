@@ -3,7 +3,6 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.IO;
-using Dunwich.src;
 
 namespace Dunwich
 {
@@ -20,7 +19,9 @@ namespace Dunwich
             //r.ExecuteRFile();
 
             RVector rVector = new RVector();
-            rVector.size = 3;
+            rVector.Init(() => rVector);
+            Console.WriteLine(rVector.size);
+            rVector.Add("Rawr");
             Console.WriteLine(rVector.size);
             Console.WriteLine("Press enter to continue...");
             Console.ReadLine();

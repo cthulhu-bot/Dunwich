@@ -4,7 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-using Dunwich.src;
+using System.Linq.Expressions;
 
 namespace Dunwich
 {
@@ -93,6 +93,26 @@ namespace Dunwich
          * Returns:
          * */
         private void WriteToRFile(string command)
+        {
+            string RFile = this.RPath + this.RFile;
+            try
+            {
+                File.AppendAllText(RFile, command);
+            }
+            catch (Exception e)
+            {
+                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + ":  ");
+                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + e.Message + "\n");
+                Console.WriteLine("Exception Caught: " + e.Message);
+                Console.WriteLine("... press any key to continue");
+                Console.ReadLine();
+            }
+        }
+
+        /**
+         * 
+         * */
+        public void WriteCommand(string command)
         {
             string RFile = this.RPath + this.RFile;
             try
