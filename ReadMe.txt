@@ -1,6 +1,6 @@
 ﻿Dunwich
 
-Dunwich is a lightweight C# wrapper that encapsulates the R programming language.
+A lightweight C# wrapper that encapsulates the R programming language.
 
 ToDo:
 
