@@ -29,7 +29,7 @@ namespace Dunwich
         {
             var body = ((MemberExpression)expr.Body);
             //Console.WriteLine("VectorName = {0}", body.Member.Name);
-            new R().WriteCommand(body.Member.Name);
+            new RFuncs().WriteCommand(body.Member.Name);
         }
 
         /**

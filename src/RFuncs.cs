@@ -4,28 +4,17 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
-using System.Linq.Expressions;
 
 namespace Dunwich
 {
-    /**
-     * Class:  R
-     * Description: 
-     * */
-    class R
+    class RFuncs
     {
         private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\";
         private string RFile = "test.R";
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
-
-        // public constructor
-        public R()
-        {
-            this.RFileInit();
-            this.batchFileInit();
-        }
-
+        private RFile rFile = new RFile();
+        
         /**
          * Function:     batchFileInit
          * Description:  Create batch files used to execute any generated .R files
@@ -163,49 +152,6 @@ namespace Dunwich
             }
         }
 
-        /**
-         * Function:     batchFileInit
-         * Description:  Create batch files used to execute any generated .R files
-         * Parameters:
-         * Returns:
-         * */
-        private void RFileInit()
-        {
-            // Create the file if it does not exist
-            // Else wipe its contents
-            if (!File.Exists(this.RPath + this.RFile))
-            {
-                File.Create(this.RPath + this.RFile);
-            }
-            else
-            {
-                File.WriteAllText(this.RPath + this.RFile, "");
-            }
-
-        }
-
-        /**
-         * Function:     batchFileInit
-         * Description:  Create batch files used to execute any generated .R files
-         * Parameters:
-         * Returns:
-         * */
-        private void batchFileInit()
-        {
-            string batchFileName = this.RPath + this.BatchFile;
-
-            // Delete the file if it exists
-            if (File.Exists(batchFileName))
-            {
-                File.Delete(batchFileName);
-            }
-
-            using (FileStream fs = File.Create(batchFileName, 1024)) 
-            {
-                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"" + this.RPath + this.RFile + "\"");
-                fs.Write(info, 0, info.Length);
-            }
-        }
     }
 
     //class RVectorAssembler

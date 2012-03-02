@@ -11,13 +11,13 @@ namespace Dunwich
 
         static void Main(string[] args)
         {
-            R r = new R();
             //r.WriteToFileOn("C:\\\\Users\\\\Joshua\\\\Documents\\\\Visual Studio 2010\\\\Projects\\\\Dunwich\\\\Dunwich\\\\output\\\\test_output.txt");
             //r.WriteLine("this shit should be working");
             //r.StreamResultsToFile();
             //r.WriteLine("WTF");
             //r.ExecuteRFile();
 
+            RFuncs r = new RFuncs();
             RVector rVector = new RVector();
             rVector.Init(() => rVector);
             Console.WriteLine(rVector.size);
