@@ -13,7 +13,10 @@ namespace Dunwich
         private string RFile = "test.R";
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
-        private RFile rFile = new RFile();
+
+        public RFuncs() {
+            RFile rfile = new RFile(RPath, RFile, BatchFile);
+        }
         
         /**
          * Function:     batchFileInit
@@ -151,7 +154,6 @@ namespace Dunwich
                 Console.ReadLine();
             }
         }
-
     }
 
     //class RVectorAssembler

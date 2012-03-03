@@ -8,15 +8,10 @@ namespace Dunwich
 {
     class RFile
     {
-        private string RPath = "C:\\Users\\Joshua\\Documents\\Visual Studio 2010\\Projects\\Dunwich\\Dunwich\\output\\";
-        private string RFileName = "test.R";
-        private string RLogFile = "test.log";
-        private string BatchFile = "test.bat";
-
-        public RFile()
+        public RFile(string RPath, string RFileName, string BatchFile)
         {
-            this.RFileInit();
-            this.batchFileInit();
+            this.RFileInit(RPath, RFileName);
+            this.batchFileInit(RPath, BatchFile, RFileName);
         }
 
 
@@ -26,17 +21,17 @@ namespace Dunwich
          * Parameters:
          * Returns:
          * */
-        private void RFileInit()
+        private void RFileInit(string RPath, string RFileName)
         {
             // Create the file if it does not exist
             // Else wipe its contents
-            if (!File.Exists(this.RPath + this.RFileName))
+            if (!File.Exists(RPath + RFileName))
             {
-                File.Create(this.RPath + this.RFileName);
+                File.Create(RPath + RFileName);
             }
             else
             {
-                File.WriteAllText(this.RPath + this.RFileName, "");
+                File.WriteAllText(RPath + RFileName, "");
             }
 
         }
@@ -48,9 +43,9 @@ namespace Dunwich
          * Parameters:
          * Returns:
          * */
-        private void batchFileInit()
+        private void batchFileInit(string RPath, string BatchFile, string RFileName)
         {
-            string batchFileName = this.RPath + this.BatchFile;
+            string batchFileName = RPath + BatchFile;
 
             // Delete the file if it exists
             if (File.Exists(batchFileName))
@@ -60,7 +55,7 @@ namespace Dunwich
 
             using (FileStream fs = File.Create(batchFileName, 1024))
             {
-                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"" + this.RPath + this.RFileName + "\"");
+                byte[] info = new System.Text.UTF8Encoding(true).GetBytes("@ECHO OFF\nRscript \"" + RPath + RFileName + "\"");
                 fs.Write(info, 0, info.Length);
             }
         }
