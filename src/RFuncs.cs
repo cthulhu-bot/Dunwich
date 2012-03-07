@@ -4,6 +4,7 @@ using System.Linq;
 using System.Text;
 using System.IO;
 using System.Diagnostics;
+using System.Data.SqlTypes;
 
 namespace Dunwich
 {
@@ -17,9 +18,9 @@ namespace Dunwich
         public RFuncs() {
             RFile rfile = new RFile(RPath, RFile, BatchFile);
         }
-        
+
         /**
-         * Function:     batchFileInit
+         * Function:     plot
          * Description:  Create batch files used to execute any generated .R files
          * Parameters:
          * Returns:
@@ -27,11 +28,11 @@ namespace Dunwich
         public void plot(RVector r)
         {
             this.WriteToRFile("X11()\n");
-            this.WriteToRFile("plot(" + r.name + ")");
+            this.WriteToRFile("plot(" + r.Name + ")");
         }
 
         /**
-         * Function:     batchFileInit
+         * Function:     plot
          * Description:  Create batch files used to execute any generated .R files
          * Parameters:
          * Returns:
@@ -39,11 +40,19 @@ namespace Dunwich
         public void plot(RVector r1, RVector r2)
         {
             this.WriteToRFile("X11()\n");
-            this.WriteToRFile("plot(" + r1.name + ", " + r2.name + ")");
+            this.WriteToRFile("plot(" + r1.Name + ", " + r2.Name + ")");
+        }
+
+        public void buildVector(RVector r)
+        {
+            this.WriteToRFile(r.Name + " <- ");
+            foreach (object o in r)
+            {
+            }
         }
 
         /**
-         * Function:     batchFileInit
+         * Function:     WriteLine
          * Description:  Create batch files used to execute any generated .R files
          * Parameters:
          * Returns:
@@ -79,7 +88,7 @@ namespace Dunwich
         }
 
         /**
-         * Function:     batchFileInit
+         * Function:     WriteToRFile
          * Description:  Create batch files used to execute any generated .R files
          * Parameters:
          * Returns:
@@ -122,7 +131,7 @@ namespace Dunwich
         }
 
         /**
-         * Function:     batchFileInit
+         * Function:     ExecuteRFile
          * Description:  Create batch files used to execute any generated .R files
          * Parameters:
          * Returns:
@@ -153,7 +162,11 @@ namespace Dunwich
                 Console.WriteLine("... press any key to continue");
                 Console.ReadLine();
             }
+
+            AppleList apple = new AppleList();
         }
+
+
     }
 
     //class RVectorAssembler
@@ -164,4 +177,9 @@ namespace Dunwich
     //        return rVector;
     //    }
     //}
+
+    class AppleList
+    {
+        public Boolean slotted = false;
+    }
 }

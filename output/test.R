@@ -1,6 +1,1 @@
-x <- c(1,2,3,4,5)
-y <- c(1,2,3,4,5)
-X11()
-plot(x)
-message("Press Return to Continue")
-invisible(readLines("stdin", n=1))
+rVector

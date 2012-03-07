@@ -15,10 +15,11 @@ namespace Dunwich
     class RVector : IEnumerable
     {
         private List<object> values;
+        private string name;
 
         public RVector()
         {
-            this.values = new List<object>();
+            //this.values = new List<object>();
         }
 
         /**
@@ -29,7 +30,8 @@ namespace Dunwich
         {
             var body = ((MemberExpression)expr.Body);
             //Console.WriteLine("VectorName = {0}", body.Member.Name);
-            new RFuncs().WriteCommand(body.Member.Name);
+            //this.name = body.Member.Name;
+            new RFuncs().WriteCommand(body.Member.Name + "\n");
         }
 
         /**
@@ -99,10 +101,16 @@ namespace Dunwich
             get { return this.values.Count; }
         }
 
-        public string name
+        public string Name
         {
-            get { return name; }
-            set { name = value; }
+            get { return this.name; }
+            set { this.name= value; }
+        }
+
+        public List<object> Values
+        {
+            get { return this.values; }
+            set { this.values = value; }
         }
     }
 
