@@ -19,7 +19,7 @@ namespace Dunwich
 
         public RVector()
         {
-            //this.values = new List<object>();
+            this.values = new List<object>();
         }
 
         /**
@@ -41,7 +41,7 @@ namespace Dunwich
          * */
         public void Add(object value)
         {
-            this.values.Add(value);
+            Values.Add(value);
         }
 
         /**
@@ -51,27 +51,27 @@ namespace Dunwich
          * */
         public void Remove(object value)
         {
-            this.values.Remove(value);
+            Values.Remove(value);
         }
 
         // The nested class inheriting the IEnumerator interface is required because the GetEnumerator() method returns
         // an IEnumerator interface and is required in order for this class to be iterable
-        private class Enum : IEnumerator
+        private class Enumerator : IEnumerator
         {
-            List<object> values = null;
+            List<object> valuesEnum = null;
             int position = -1;
-            public Enum(List<object> values)
+            public Enumerator(List<object> valuesArg)
             {
-                values = new List<object>();
+                valuesEnum = valuesArg;
             }
-            private IEnumerator GetEnumerator()
+            IEnumerator GetEnumerator()
             {
                 return (IEnumerator)this;
             }
             public bool MoveNext()
             {
                 position++;
-                return (position < values.Count());
+                return (position < valuesEnum.Count());
             }
             public void Reset()
             { position = 0; }
@@ -81,7 +81,7 @@ namespace Dunwich
                 {
                     try
                     {
-                        return values[position];
+                        return valuesEnum[position];
                     }
                     catch (IndexOutOfRangeException)
                     {
@@ -93,7 +93,7 @@ namespace Dunwich
 
         public IEnumerator GetEnumerator()
         {
-            return new Enum(values);
+            return new Enumerator(Values);
         }
 
         public int size
@@ -111,6 +111,19 @@ namespace Dunwich
         {
             get { return this.values; }
             set { this.values = value; }
+        }
+
+        public object this[int index]
+        {
+            get
+            {
+                return Values[index];
+            }
+
+            set
+            {
+                Values[index] = value;
+            }
         }
     }
 

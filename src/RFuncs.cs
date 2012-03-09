@@ -15,13 +15,16 @@ namespace Dunwich
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
 
+        /**
+         * Public constuctor instantiating the RFile and Batch file
+         * */
         public RFuncs() {
             RFile rfile = new RFile(RPath, RFile, BatchFile);
         }
 
         /**
          * Function:     plot
-         * Description:  Create batch files used to execute any generated .R files
+         * Description:  Plot a single vector
          * Parameters:
          * Returns:
          * */
@@ -33,7 +36,7 @@ namespace Dunwich
 
         /**
          * Function:     plot
-         * Description:  Create batch files used to execute any generated .R files
+         * Description:  Plot 2 vectors against each other
          * Parameters:
          * Returns:
          * */
@@ -43,13 +46,13 @@ namespace Dunwich
             this.WriteToRFile("plot(" + r1.Name + ", " + r2.Name + ")");
         }
 
-        public void buildVector(RVector r)
-        {
-            this.WriteToRFile(r.Name + " <- ");
-            foreach (object o in r)
-            {
-            }
-        }
+        //public void buildVector(RVector r)
+        //{
+        //    this.WriteToRFile(r.Name + " <- ");
+        //    foreach (object o in r)
+        //    {
+        //    }
+        //}
 
         /**
          * Function:     WriteLine
@@ -89,16 +92,16 @@ namespace Dunwich
 
         /**
          * Function:     WriteToRFile
-         * Description:  Create batch files used to execute any generated .R files
-         * Parameters:
-         * Returns:
+         * Description:  Core function to format and write commands to RFile for execution.
+         * Parameters:   command Actual R code generated from other internal functions
+         * Returns:      void
          * */
         private void WriteToRFile(string command)
         {
             string RFile = this.RPath + this.RFile;
             try
             {
-                File.AppendAllText(RFile, command);
+                File.AppendAllText(RFile, command + "\n");
             }
             catch (Exception e)
             {
@@ -111,14 +114,18 @@ namespace Dunwich
         }
 
         /**
-         * 
+         * Function:    WriteCommand
+         * Description: Backdoor implementation to write commands directly to the RFile.
+         * Must change to private before deployment.
+         * Parameters:  command String of R commands to write
+         * Returns:     Void
          * */
         public void WriteCommand(string command)
         {
             string RFile = this.RPath + this.RFile;
             try
             {
-                File.AppendAllText(RFile, command);
+                File.AppendAllText(RFile, command + "\n");
             }
             catch (Exception e)
             {
@@ -162,11 +169,7 @@ namespace Dunwich
                 Console.WriteLine("... press any key to continue");
                 Console.ReadLine();
             }
-
-            AppleList apple = new AppleList();
         }
-
-
     }
 
     //class RVectorAssembler
@@ -177,9 +180,4 @@ namespace Dunwich
     //        return rVector;
     //    }
     //}
-
-    class AppleList
-    {
-        public Boolean slotted = false;
-    }
 }
