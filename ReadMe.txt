@@ -10,3 +10,8 @@ ToDo:
 4.  Fix the RVector enumeration and add indexing (DONE)
 5.  Abstract out RFile access (writing/reading) since it will need to be accessed by more than just the functions class.  RVector currently having difficult time writing to Rfile without additional layer of abstraction.
 6.  Decide whether vector arithmatic should be occurring in c# or directly in R (separation of duties)
+
+Git pushing reminder:
+git add 'changed file path'
+git commit -m 'commit logging message'
+git push origin master
