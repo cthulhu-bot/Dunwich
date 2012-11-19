@@ -14,12 +14,13 @@ namespace Dunwich
         private string RFile = "test.R";
         private string RLogFile = "test.log";
         private string BatchFile = "test.bat";
+        private RFileWriter rw;
 
         /**
-         * Public constuctor instantiating the RFile and Batch file
+         * Public constuctor instantiating RFileWriter
          * */
         public RFuncs() {
-            RFile rfile = new RFile(RPath, RFile, BatchFile);
+            rw = new RFileWriter();
         }
 
         /**
@@ -30,8 +31,8 @@ namespace Dunwich
          * */
         public void plot(RVector r)
         {
-            this.WriteToRFile("X11()\n");
-            this.WriteToRFile("plot(" + r.Name + ")");
+            rw.WriteToRFile("X11()\n");
+            rw.WriteToRFile("plot(" + r.Name + ")");
         }
 
         /**
@@ -42,13 +43,13 @@ namespace Dunwich
          * */
         public void plot(RVector r1, RVector r2)
         {
-            this.WriteToRFile("X11()\n");
-            this.WriteToRFile("plot(" + r1.Name + ", " + r2.Name + ")");
+            rw.WriteToRFile("X11()\n");
+            rw.WriteToRFile("plot(" + r1.Name + ", " + r2.Name + ")");
         }
 
         //public void buildVector(RVector r)
         //{
-        //    this.WriteToRFile(r.Name + " <- ");
+        //    rw.WriteToRFile(r.Name + " <- ");
         //    foreach (object o in r)
         //    {
         //    }
@@ -62,7 +63,7 @@ namespace Dunwich
          * */
         public void WriteLine(string command)
         {
-            this.WriteToRFile("cat('" + command + "')\n");
+            rw.WriteToRFile("cat('" + command + "')\n");
         }
 
 
@@ -75,7 +76,7 @@ namespace Dunwich
          * */
         public void StreamResultsToFileOn(string file)
         {
-            this.WriteToRFile("sink(\"" + file + "\")\n");
+            rw.WriteToRFile("sink(\"" + file + "\")\n");
         }
 
         /**
@@ -87,55 +88,21 @@ namespace Dunwich
          * */
         public void StreamResultsToFileOff()
         {
-            this.WriteToRFile("sink()\n");
+            rw.WriteToRFile("sink()\n");
         }
 
         /**
-         * Function:     WriteToRFile
-         * Description:  Core function to format and write commands to RFile for execution.
-         * Parameters:   command Actual R code generated from other internal functions
-         * Returns:      void
+         * Function:    Print
+         * Description: 
+         * Parameters:  
+         * Returns:     null
          * */
-        private void WriteToRFile(string command)
+        public void print(RVector v)
         {
-            string RFile = this.RPath + this.RFile;
-            try
-            {
-                File.AppendAllText(RFile, command + "\n");
-            }
-            catch (Exception e)
-            {
-                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + ":  ");
-                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + e.Message + "\n");
-                Console.WriteLine("Exception Caught: " + e.Message);
-                Console.WriteLine("... press any key to continue");
-                Console.ReadLine();
-            }
+            rw.WriteToRFile(v.Name + "\n");
         }
 
-        /**
-         * Function:    WriteCommand
-         * Description: Backdoor implementation to write commands directly to the RFile.
-         * Must change to private before deployment.
-         * Parameters:  command String of R commands to write
-         * Returns:     Void
-         * */
-        public void WriteCommand(string command)
-        {
-            string RFile = this.RPath + this.RFile;
-            try
-            {
-                File.AppendAllText(RFile, command + "\n");
-            }
-            catch (Exception e)
-            {
-                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + ":  ");
-                File.AppendAllText(RPath + RLogFile, "WriteToRFile:  " + System.DateTime.Now + e.Message + "\n");
-                Console.WriteLine("Exception Caught: " + e.Message);
-                Console.WriteLine("... press any key to continue");
-                Console.ReadLine();
-            }
-        }
+
 
         /**
          * Function:     ExecuteRFile
@@ -169,6 +136,14 @@ namespace Dunwich
                 Console.WriteLine("... press any key to continue");
                 Console.ReadLine();
             }
+        }
+
+        /**
+         * Backdoor to write R code directly to an R File executable
+         * */
+        public void WriteBDCommand(string rCode)
+        {
+            rw.WriteBDCommand(rCode);
         }
     }
 
