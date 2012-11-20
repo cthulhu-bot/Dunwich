@@ -15,3 +15,5 @@ Git pushing reminder:
 git add 'changed file path'
 git commit -m 'commit logging message'
 git push origin master
+
+*Tip* "git commit" to check which files have been updated
