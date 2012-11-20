@@ -32,16 +32,18 @@ namespace Dunwich
             //v.Add(3);
             //r.print(v);
             
-            //r.ExecuteRFile();
 
             // Test array multiplication
             RVector v1 = new RVector(1, 2, 3);
+            r.print(v1);
             RVector v2 = new RVector(1, 2, 3);
-            int v3 = v1 * v2;
-            Console.WriteLine("v3 = " + v3.ToString());
+            r.print(v2);
+            r.print("Multiplication Result: " + v1 * v2);
 
-            Console.WriteLine("Press enter to continue...");
-            Console.ReadLine();
+
+            r.ExecuteRFile();
+            //Console.WriteLine("Press enter to continue...");
+            //Console.ReadLine();
         }
     }
 }

@@ -97,12 +97,21 @@ namespace Dunwich
          * Parameters:  
          * Returns:     null
          * */
+        public void print(object o)
+        {
+            rw.WriteToRFile("cat(\"" + o.ToString() + "\")\n");
+        }
+
+        /**
+         * Function:    Print
+         * Description: 
+         * Parameters:  
+         * Returns:     null
+         * */
         public void print(RVector v)
         {
             rw.WriteToRFile(v.Name + "\n");
         }
-
-
 
         /**
          * Function:     ExecuteRFile

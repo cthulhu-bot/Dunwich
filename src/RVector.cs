@@ -28,6 +28,9 @@ namespace Dunwich
             rw.WriteToRFile(Name + "<- c()\n");
         }
 
+        /**
+         * Variable paramater initalizer
+         * */
         public RVector(params object[] args)
         {
             values = new List<object>();
@@ -43,6 +46,9 @@ namespace Dunwich
             rw.WriteToRFile(")\n");
         }
 
+        /**
+         * List object collection initalizer
+         * */
         public RVector(List<object> values)
         {
             values = new List<object>();
