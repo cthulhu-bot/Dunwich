@@ -15,11 +15,53 @@ namespace Dunwich
     class RVector : IEnumerable
     {
         private List<object> values;
-        private string name;
+        private string name = "test ";
+        private RFileWriter rw;
 
+        /**
+         * Public constuctor instantiating RFileWriter
+         * */
         public RVector()
         {
-            this.values = new List<object>();
+            values = new List<object>();
+            rw = new RFileWriter();
+            rw.WriteToRFile(Name + "<- c()\n");
+        }
+
+        /**
+         * Variable paramater initalizer
+         * */
+        public RVector(params object[] args)
+        {
+            values = new List<object>();
+            foreach (object o in args) values.Add(o);
+
+            rw = new RFileWriter();
+            rw.WriteToRFile(Name + "<- c(");
+            for (int i = 0; i < args.Length; i++)
+            {
+                rw.WriteToRFile(args[i].ToString());
+                if (i+1 < args.Length) rw.WriteToRFile(", ");
+            }
+            rw.WriteToRFile(")\n");
+        }
+
+        /**
+         * List object collection initalizer
+         * */
+        public RVector(List<object> values)
+        {
+            values = new List<object>();
+            foreach (object o in values) values.Add(o);
+
+            rw = new RFileWriter();
+            rw.WriteToRFile(Name + "<- c(");
+            for (int i = 0; i < values.Count; i++)
+            {
+                rw.WriteToRFile(values[i].ToString());
+                if (i + 1 < values.Count) rw.WriteToRFile(", ");
+            }
+            rw.WriteToRFile(")\n");
         }
 
         /**
@@ -29,9 +71,7 @@ namespace Dunwich
         public void Init(Expression<Func<RVector>> expr)
         {
             var body = ((MemberExpression)expr.Body);
-            //Console.WriteLine("VectorName = {0}", body.Member.Name);
-            //this.name = body.Member.Name;
-            new RFuncs().WriteCommand(body.Member.Name + "\n");
+            this.name = body.Member.Name;
         }
 
         /**
@@ -41,6 +81,12 @@ namespace Dunwich
          * */
         public void Add(object value)
         {
+            rw.WriteToRFile(Name + "<- c(");
+            foreach (object obj in values)
+            {
+                rw.WriteToRFile(obj + ", ");
+            }
+            rw.WriteToRFile(value.ToString() + ")\n");
             Values.Add(value);
         }
 
@@ -94,6 +140,20 @@ namespace Dunwich
         public IEnumerator GetEnumerator()
         {
             return new Enumerator(Values);
+        }
+
+        /**
+         * Override multiplication operator to multiply 2 vectors together
+         * */
+        public static int operator *(RVector r1, RVector r2)
+        {
+            int sum = 0;
+            if (r1.size != r2.size) return -1;
+            for (int i = 0; i < r1.size; i++)
+            {
+                sum = sum + Convert.ToInt32(r1[i]) * Convert.ToInt32(r2[i]);
+            }
+            return sum;
         }
 
         public int size
